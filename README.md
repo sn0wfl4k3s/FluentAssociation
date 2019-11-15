@@ -3,7 +3,8 @@ A lib for data mining
 
 # Modo de uso:
 
-var lista = new List<List<string>>
+<code>
+            var lista = new List<List<string>>
             {
                 new List<string> { "leite", "ovos", "café", "açúcar", "fraldas", "manteiga" },
                 new List<string> { "leite", "café", "farinha" },
@@ -16,3 +17,4 @@ var lista = new List<List<string>>
                 new List<string> { "manteiga", "ovos", "leite", "café", "açúcar" },
                 new List<string> { "fraldas", "café", "cerveja" }
             };
+</code>
