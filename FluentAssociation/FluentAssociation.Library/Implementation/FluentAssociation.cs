@@ -22,6 +22,24 @@ namespace FluentAssociation.Library.Implementation
             _elements = await GetInstanceDistincts();
         }
 
+        private Task<List<T>> GetInstanceDistincts()
+        {
+            var distincts = new List<T>();
+
+            foreach (var transaction in _collection)
+            {
+                foreach (var element in transaction)
+                {
+                    if (!distincts.Contains(element))
+                    {
+                        distincts.Add(element);
+                    }
+                }
+            }
+
+            return Task.FromResult(distincts);
+        }
+
         public Task<List<Metrics1Item<T>>> Get1ItemSets()
         {
             var metrics = new List<Metrics1Item<T>>();
@@ -100,7 +118,10 @@ namespace FluentAssociation.Library.Implementation
                 {
                     for (int l = j; l < _elements.Count; ++l)
                     {
-                        combinations.Add(new T[3] { _elements[i - 2], _elements[j - 1], _elements[l] });
+                        combinations.Add(new T[3] {
+                            _elements[i - 2],
+                            _elements[j - 1],
+                            _elements[l] });
                     }
                 }
             }
@@ -134,27 +155,58 @@ namespace FluentAssociation.Library.Implementation
             return Task.FromResult(metrics);
         }
 
-        private Task<List<T>> GetInstanceDistincts()
+        public Task<List<Metrics4Item<T>>> Get4ItemSets()
         {
-            var distincts = new List<T>();
+            var metrics = new List<Metrics4Item<T>>();
 
-            foreach (var transaction in _collection)
+            var combinations = new List<T[]>();
+
+            for (int i = 3; i < _elements.Count; ++i)
             {
-                foreach (var element in transaction)
+                for (int j = i; j < _elements.Count; ++j)
                 {
-                    if (!distincts.Contains(element))
+                    for (int l = j; l < _elements.Count; ++l)
                     {
-                        distincts.Add(element);
+                        for (int h = j; h < _elements.Count; ++h)
+                        {
+                            combinations.Add(new T[4] {
+                                _elements[i - 3],
+                                _elements[j - 2],
+                                _elements[l - 1],
+                                _elements[h] });
+                        }
                     }
                 }
             }
 
-            return Task.FromResult(distincts);
-        }
+            foreach (var itens in combinations)
+            {
+                var countXandY = _collection
+                    .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]) && t.Contains(itens[3]))
+                    .Count();
 
-        public Task<List<Metrics4Item<T>>> Get4ItemSets()
-        {
-            throw new System.NotImplementedException();
+                var countX = _collection
+                    .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
+                    .Count();
+
+                var suport = (float)countXandY / _collection.Count;
+
+                var confidence = suport / ((float)countX / _collection.Count);
+
+                var metric = new Metrics4Item<T>
+                {
+                    Item1 = itens[0],
+                    Item2 = itens[1],
+                    Item3 = itens[2],
+                    Item4 = itens[3],
+                    Suport = suport,
+                    Confidence = confidence
+                };
+
+                metrics.Add(metric);
+            }
+
+            return Task.FromResult(metrics);
         }
     }
 }

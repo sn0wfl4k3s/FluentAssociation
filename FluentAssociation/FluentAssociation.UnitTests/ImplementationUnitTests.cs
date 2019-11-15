@@ -71,5 +71,20 @@ namespace FluentAssociation.UnitTests
 
             exemplo.Confidence.Should().Be(0.6f);
         }
+
+        [Fact]
+        public async void Test_4ItemSet()
+        {
+            var metrics = await _service.Get4ItemSets();
+
+            // [leite, ovos, café] => [café]
+            var exemplo = metrics
+                .Where(m => m.Item1 == "leite" && m.Item2 == "ovos" && m.Item3 == "café" && m.Item4 == "açúcar")
+                .First();
+
+            exemplo.Suport.Should().Be(0.3f);
+
+            exemplo.Confidence.Should().Be(1f);
+        }
     }
 }
