@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29411.138
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAssociation.Library", "FluentAssociation.Library\FluentAssociation.Library.csproj", "{288304EC-C2C6-47BF-9929-7DD2622A72C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAssociation.Domain", "FluentAssociation.Domain\FluentAssociation.Domain.csproj", "{AACB274C-DAB4-46BD-8E6A-D86D75465B43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAssociation.UnitTests", "FluentAssociation.UnitTests\FluentAssociation.UnitTests.csproj", "{81B6F132-05A4-4E7B-A8C9-2316FC69932A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{288304EC-C2C6-47BF-9929-7DD2622A72C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{288304EC-C2C6-47BF-9929-7DD2622A72C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{288304EC-C2C6-47BF-9929-7DD2622A72C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACB274C-DAB4-46BD-8E6A-D86D75465B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACB274C-DAB4-46BD-8E6A-D86D75465B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACB274C-DAB4-46BD-8E6A-D86D75465B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACB274C-DAB4-46BD-8E6A-D86D75465B43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81B6F132-05A4-4E7B-A8C9-2316FC69932A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B6F132-05A4-4E7B-A8C9-2316FC69932A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81B6F132-05A4-4E7B-A8C9-2316FC69932A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81B6F132-05A4-4E7B-A8C9-2316FC69932A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
