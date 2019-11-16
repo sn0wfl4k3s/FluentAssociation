@@ -4,14 +4,14 @@ Uma biblioteca para realizar data-mining para encontrar elementos fortemente con
 ## Introdução
 Ok, imagina esse caso: 
 <br>
-> Uma das maiores redes de varejo dos Estados Unidos descobriu, em seu gigantesco armazém de dados, que a venda de fraldas descartáveis estava associada à de cerveja. Em geral, os compradores eram homens, que saíam à noite para comprar fraldas e aproveitavam para levar algumas latinhas para casa. Os produtos foram postos lado a lado. Resultado: a venda de fraldas e cervejas disparou.
+<blockquote> Uma das maiores redes de varejo dos Estados Unidos descobriu, em seu gigantesco armazém de dados, que a venda de fraldas descartáveis estava associada à de cerveja. Em geral, os compradores eram homens, que saíam à noite para comprar fraldas e aproveitavam para levar algumas latinhas para casa. Os produtos foram postos lado a lado. Resultado: a venda de fraldas e cervejas disparou. </blockquote>
 <br>
 <br>
-*Referências:*
+* Referências: *
 <br>
-*Exame: [O que cerveja tem a ver com fraldas?](https://exame.abril.com.br/revista-exame/o-que-cerveja-tem-a-ver-com-fraldas-m0053931/)*
+Exame: [O que cerveja tem a ver com fraldas?](https://exame.abril.com.br/revista-exame/o-que-cerveja-tem-a-ver-com-fraldas-m0053931/)
 <br>
-*Medium: [A inteligencia em comprar Cerveja e Fraldas](https://medium.com/@wonderwanny/a-inteligencia-em-comprar-cerveja-e-fraldas-a617899556)*
+Medium: [A inteligencia em comprar Cerveja e Fraldas](https://medium.com/@wonderwanny/a-inteligencia-em-comprar-cerveja-e-fraldas-a617899556)
 
 ### Modo de uso:
 
