@@ -1,11 +1,10 @@
 ﻿using FluentAssociation.Library.Exception;
-using FluentAssociation.Library.Interface;
 using FluentAssociation.Library.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FluentAssociation.Library.Implementation
+namespace FluentAssociation
 {
     public class FluentAssociation<T> : IFluentAssociation<T>
     {

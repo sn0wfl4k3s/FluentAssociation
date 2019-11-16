@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FluentAssociation.Library.Interface
+namespace FluentAssociation
 {
     public interface IFluentAssociation<T>
     {

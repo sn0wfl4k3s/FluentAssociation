@@ -1,6 +1,4 @@
-﻿using FluentAssociation.Library.Implementation;
-using FluentAssociation.Library.Interface;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentAssociation.Library.Configuration
 {
