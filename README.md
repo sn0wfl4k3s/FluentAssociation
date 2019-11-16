@@ -9,9 +9,9 @@ Uma das maiores redes de varejo dos Estados Unidos descobriu, em seu gigantesco 
 <br>
 *Referências:*
 <br>
-Exame: [O que cerveja tem a ver com fraldas?](https://exame.abril.com.br/revista-exame/o-que-cerveja-tem-a-ver-com-fraldas-m0053931/)
+*Exame: [O que cerveja tem a ver com fraldas?](https://exame.abril.com.br/revista-exame/o-que-cerveja-tem-a-ver-com-fraldas-m0053931/)*
 <br>
-Medium: [A inteligencia em comprar Cerveja e Fraldas](https://medium.com/@wonderwanny/a-inteligencia-em-comprar-cerveja-e-fraldas-a617899556)
+*Medium: [A inteligencia em comprar Cerveja e Fraldas](https://medium.com/@wonderwanny/a-inteligencia-em-comprar-cerveja-e-fraldas-a617899556)*
 
 ### Modo de uso:
 
@@ -26,7 +26,12 @@ Ou se for aplicação web:
 
 <br>
 
-Depois é só usar um dos seguintes métodos
+Depois é só usar um dos seguintes métodos:
+
+* Get1ItemSets() <br>
+* Get2ItemSets() <br>
+* Get3ItemSets() <br>
+* Get4ItemSets() <br>
 
 Exemplo nos testes:
 <br>
