@@ -2,8 +2,8 @@
 Uma biblioteca para realizar data-mining para encontrar elementos fortemente conectados em uma base de dados.
 
 ## Instalação
-Download pelo dotnet cli:
-``` Install-Package FluentAssociation ```
+Download pelo dotnet cli:  
+```   Install-Package FluentAssociation  ```
 
 ## Introdução
 Ok, imagina esse caso:
