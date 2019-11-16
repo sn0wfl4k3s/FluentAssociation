@@ -3,7 +3,10 @@ Uma biblioteca para realizar data-mining para encontrar elementos fortemente con
 
 ## Instalação
 Download pelo dotnet cli:  
-```   Install-Package FluentAssociation  ```
+
+```   
+    Install-Package FluentAssociation  
+```
 
 ## Introdução
 Ok, imagina esse caso:
