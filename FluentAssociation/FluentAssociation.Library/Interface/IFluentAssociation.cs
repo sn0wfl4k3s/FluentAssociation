@@ -1,4 +1,4 @@
-﻿using FluentAssociation.Domain;
+﻿using FluentAssociation.Library.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
