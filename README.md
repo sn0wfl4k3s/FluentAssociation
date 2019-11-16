@@ -1,6 +1,10 @@
 # FluentAssociation
 Uma biblioteca para realizar data-mining para encontrar elementos fortemente conectados em uma base de dados.
 
+## Instalação
+Download pelo dotnet cli:
+> Install-Package FluentAssociation
+
 ## Introdução
 Ok, imagina esse caso:
 > Uma das maiores redes de varejo dos Estados Unidos descobriu, em seu gigantesco armazém de dados, que a venda de fraldas descartáveis estava associada à de cerveja. Em geral, os compradores eram homens, que saíam à noite para comprar fraldas e aproveitavam para levar algumas latinhas para casa. Os produtos foram postos lado a lado. Resultado: a venda de fraldas e cervejas disparou.
