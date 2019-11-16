@@ -13,7 +13,7 @@ Ok, imagina esse caso:
 
 Instanciação e carregamento dos dados:  
 ![Inicio](https://user-images.githubusercontent.com/30809620/68982274-16399880-07e5-11ea-84ab-f3cf84707817.PNG)  
-Ou se for aplicação web:  
+Ou se for aplicação web, incluir na Startup.cs:  
 ![services](https://user-images.githubusercontent.com/30809620/68983591-754ddc00-07ea-11ea-8fb8-a4415ba6731f.PNG)  
 
 Depois é só usar um dos seguintes métodos para retornar uma lista de combinações dos diferentes elementos da lista juntamente com as métricas de Suporte (Suport) e Confiança (Confidence):
