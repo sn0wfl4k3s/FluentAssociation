@@ -16,12 +16,14 @@ Instanciação e carregamento dos dados:
 Ou se for aplicação web:  
 ![services](https://user-images.githubusercontent.com/30809620/68983591-754ddc00-07ea-11ea-8fb8-a4415ba6731f.PNG)  
 
-Depois é só usar um dos seguintes métodos:
+Depois é só usar um dos seguintes métodos para retornar uma lista de combinações dos diferentes elementos da lista juntamente com as métricas de Suporte (Suport) e Confiança (Confidence):
 
 * Get1ItemSets()  
 * Get2ItemSets()  
 * Get3ItemSets()  
-* Get4ItemSets()  
+* Get4ItemSets()
+
+
 
 Exemplo nos testes:  
 ![teste](https://user-images.githubusercontent.com/30809620/68982733-f2775200-07e6-11ea-9b64-8fc5417e3fab.PNG)
