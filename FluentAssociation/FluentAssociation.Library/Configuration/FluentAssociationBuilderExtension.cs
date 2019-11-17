@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentAssociation.Library.Configuration
+namespace FluentAssociation
 {
     public static class FluentAssociationBuilderExtension
     {
