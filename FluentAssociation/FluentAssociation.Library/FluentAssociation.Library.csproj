@@ -11,9 +11,9 @@
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/snowflakesss/FluentAssociation</RepositoryUrl>
     <PackageTags>data-mining;csharp;netstandard;association;association-rules;apriori-algorithm;dotnet</PackageTags>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
