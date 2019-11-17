@@ -23,6 +23,11 @@ namespace FluentAssociation
 
         private Task<List<T>> GetInstanceDistincts()
         {
+            if (_collection == null)
+            {
+                throw new DataWareHouseNotLoadedException();
+            }
+
             var distincts = new List<T>();
 
             foreach (var transaction in _collection)
@@ -41,6 +46,11 @@ namespace FluentAssociation
 
         public Task<List<Metrics1Item<T>>> GetReport1ItemSets()
         {
+            if (_collection == null)
+            {
+                throw new DataWareHouseNotLoadedException();
+            }
+
             var metrics = new List<Metrics1Item<T>>();
 
             foreach (var header in _elements)
@@ -63,6 +73,11 @@ namespace FluentAssociation
 
         public Task<List<Metrics2Item<T>>> GetReport2ItemSets()
         {
+            if (_collection == null)
+            {
+                throw new DataWareHouseNotLoadedException();
+            }
+
             var metrics = new List<Metrics2Item<T>>();
 
             var combinations = new List<T[]>();
@@ -107,6 +122,11 @@ namespace FluentAssociation
 
         public Task<List<Metrics3Item<T>>> GetReport3ItemSets()
         {
+            if (_collection == null)
+            {
+                throw new DataWareHouseNotLoadedException();
+            }
+
             var metrics = new List<Metrics3Item<T>>();
 
             var combinations = new List<T[]>();
@@ -156,6 +176,11 @@ namespace FluentAssociation
 
         public Task<List<Metrics4Item<T>>> GetReport4ItemSets()
         {
+            if (_collection == null)
+            {
+                throw new DataWareHouseNotLoadedException();
+            }
+
             var metrics = new List<Metrics4Item<T>>();
 
             var combinations = new List<T[]>();
