@@ -33,4 +33,5 @@ Depois é só usar um dos seguintes métodos para retornar uma lista de combina�
 
 
 Exemplo nos testes:  
-![teste](https://user-images.githubusercontent.com/30809620/68982733-f2775200-07e6-11ea-9b64-8fc5417e3fab.PNG)
+![getMetrics](https://user-images.githubusercontent.com/30809620/69012694-5d479b00-0957-11ea-947e-5c0fae9dd947.PNG)  
+![melhorConfianca](https://user-images.githubusercontent.com/30809620/69012701-66d10300-0957-11ea-90e4-57b1b2685aeb.PNG)
