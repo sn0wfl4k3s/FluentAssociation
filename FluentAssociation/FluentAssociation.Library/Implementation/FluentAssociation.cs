@@ -39,7 +39,7 @@ namespace FluentAssociation
             return Task.FromResult(distincts);
         }
 
-        public Task<List<Metrics1Item<T>>> Get1ItemSets()
+        public Task<List<Metrics1Item<T>>> GetReport1ItemSets()
         {
             var metrics = new List<Metrics1Item<T>>();
 
@@ -61,7 +61,7 @@ namespace FluentAssociation
             return Task.FromResult(metrics);
         }
 
-        public Task<List<Metrics2Item<T>>> Get2ItemSets()
+        public Task<List<Metrics2Item<T>>> GetReport2ItemSets()
         {
             var metrics = new List<Metrics2Item<T>>();
 
@@ -105,7 +105,7 @@ namespace FluentAssociation
             return Task.FromResult(metrics);
         }
 
-        public Task<List<Metrics3Item<T>>> Get3ItemSets()
+        public Task<List<Metrics3Item<T>>> GetReport3ItemSets()
         {
             var metrics = new List<Metrics3Item<T>>();
 
@@ -154,7 +154,7 @@ namespace FluentAssociation
             return Task.FromResult(metrics);
         }
 
-        public Task<List<Metrics4Item<T>>> Get4ItemSets()
+        public Task<List<Metrics4Item<T>>> GetReport4ItemSets()
         {
             var metrics = new List<Metrics4Item<T>>();
 

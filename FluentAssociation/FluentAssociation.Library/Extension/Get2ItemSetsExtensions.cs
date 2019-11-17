@@ -1,5 +1,6 @@
 ﻿using FluentAssociation.Library.Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FluentAssociation
@@ -68,6 +69,16 @@ namespace FluentAssociation
             metrics.Reverse();
 
             return metrics;
+        }
+
+        public static Metrics2Item<T> GetItemSet<T>(this List<Metrics2Item<T>> metrics, T itemX, T itemY)
+        {
+            return metrics.Where(m => m.Item1.Equals(itemX) && m.Item2.Equals(itemY)).First();
+        }
+
+        public static async Task<Metrics2Item<T>> GetItemSet<T>(this Task<List<Metrics2Item<T>>> metrics, T itemX, T itemY)
+        {
+            return (await metrics).Where(m => m.Item1.Equals(itemX) && m.Item2.Equals(itemY)).First();
         }
     }
 }

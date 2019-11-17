@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using FluentAssociation.Library.Implementation;
-using FluentAssociation.Library.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -35,22 +33,20 @@ namespace FluentAssociation.UnitTests
         [Fact]
         public async void Test_1ItemSet()
         {
-            var metrics = await _service.Get1ItemSets();
+            var metrics = await _service.GetReport1ItemSets();
 
-            metrics
-                .Where(m => m.Item == "leite")
-                .First().Suport.Should().Be(0.6f);
+            var leite = metrics.GetItemSet("leite");
+
+            leite.Suport.Should().Be(0.6f);
         }
 
         [Fact]
         public async void Test_2ItemSet()
         {
-            var metrics = await _service.Get2ItemSets();
+            var metrics = await _service.GetReport2ItemSets();
 
             // [leite] => [ovos]
-            var exemplo = metrics
-                .Where(m => m.Item1 == "leite" && m.Item2 == "ovos")
-                .First();
+            var exemplo = metrics.GetItemSet("leite", "ovos");
 
             exemplo.Suport.Should().Be(0.5f);
 
@@ -60,12 +56,10 @@ namespace FluentAssociation.UnitTests
         [Fact]
         public async void Test_3ItemSet()
         {
-            var metrics = await _service.Get3ItemSets();
+            var metrics = await _service.GetReport3ItemSets();
 
             // [leite, ovos] => [café]
-            var exemplo = metrics
-                .Where(m => m.Item1 == "leite" && m.Item2 == "ovos" && m.Item3 == "café")
-                .First();
+            var exemplo = metrics.GetItemSet("leite", "ovos", "café");
 
             exemplo.Suport.Should().Be(0.3f);
 
@@ -75,16 +69,32 @@ namespace FluentAssociation.UnitTests
         [Fact]
         public async void Test_4ItemSet()
         {
-            var metrics = await _service.Get4ItemSets();
+            var metrics = await _service.GetReport4ItemSets();
 
-            // [leite, ovos, café] => [café]
-            var exemplo = metrics
-                .Where(m => m.Item1 == "leite" && m.Item2 == "ovos" && m.Item3 == "café" && m.Item4 == "açúcar")
-                .First();
+            // [leite, ovos, café] => [açúcar]
+            var exemplo = metrics.GetItemSet("leite", "ovos", "café", "açúcar");
 
             exemplo.Suport.Should().Be(0.3f);
 
             exemplo.Confidence.Should().Be(1f);
+        }
+
+        [Fact]
+        public async void Combinação_de_4_itens_com_melhor_confiança()
+        {
+            var metrics = await _service.GetReport4ItemSets();
+
+            var melhorConfiança = metrics.OrderByDescendingConfidence().First();
+
+            melhorConfiança.Item1.Should().BeEquivalentTo("leite");
+            
+            melhorConfiança.Item2.Should().BeEquivalentTo("ovos");
+            
+            melhorConfiança.Item3.Should().BeEquivalentTo("café");
+            
+            melhorConfiança.Item4.Should().BeEquivalentTo("açúcar");
+
+            melhorConfiança.Suport.Should().BeApproximately(0.3f, 1);
         }
     }
 }

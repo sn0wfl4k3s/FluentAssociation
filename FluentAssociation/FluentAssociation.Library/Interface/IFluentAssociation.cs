@@ -9,9 +9,9 @@ namespace FluentAssociation
         float Suport { get; set; }
         float Confidence { get; set; }
         void LoadDataWarehouse(List<List<T>> collection);
-        Task<List<Metrics1Item<T>>> Get1ItemSets();
-        Task<List<Metrics2Item<T>>> Get2ItemSets();
-        Task<List<Metrics3Item<T>>> Get3ItemSets();
-        Task<List<Metrics4Item<T>>> Get4ItemSets();
+        Task<List<Metrics1Item<T>>> GetReport1ItemSets();
+        Task<List<Metrics2Item<T>>> GetReport2ItemSets();
+        Task<List<Metrics3Item<T>>> GetReport3ItemSets();
+        Task<List<Metrics4Item<T>>> GetReport4ItemSets();
     }
 }

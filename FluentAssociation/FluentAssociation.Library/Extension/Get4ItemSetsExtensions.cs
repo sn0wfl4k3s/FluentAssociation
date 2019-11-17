@@ -1,8 +1,9 @@
 ﻿using FluentAssociation.Library.Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace FluentAssociation.Library.Extension
+namespace FluentAssociation
 {
     public static class Get4ItemSetsExtensions
     {
@@ -68,6 +69,18 @@ namespace FluentAssociation.Library.Extension
             metrics.Reverse();
 
             return metrics;
+        }
+
+        public static Metrics4Item<T> GetItemSet<T>(this List<Metrics4Item<T>> metrics, T itemX1, T itemX2, T itemX3, T itemY)
+        {
+            return metrics
+                .Where(m => m.Item1.Equals(itemX1) && m.Item2.Equals(itemX2) && m.Item3.Equals(itemX3) && m.Item4.Equals(itemY)).First();
+        }
+
+        public static async Task<Metrics4Item<T>> GetItemSet<T>(this Task<List<Metrics4Item<T>>> metrics, T itemX1, T itemX2, T itemX3, T itemY)
+        {
+            return (await metrics)
+                .Where(m => m.Item1.Equals(itemX1) && m.Item2.Equals(itemX2) && m.Item3.Equals(itemX3) && m.Item4.Equals(itemY)).First();
         }
     }
 }
