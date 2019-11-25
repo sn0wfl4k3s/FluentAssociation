@@ -8,85 +8,93 @@ namespace FluentAssociation
 {
     public class FluentAssociation<T> : IFluentAssociation<T>
     {
-        private List<List<T>> _collection;
-        private List<T> _elements;
+        private List<List<T>> _transactions;
+        private List<T> _itens;
 
-        public float Suport { get; set; } = 0.25f;
-        public float Confidence { get; set; } = 0.75f;
+        public float MinSuport { get; set; } = 0.2f;
 
-        public async void LoadDataWarehouse(List<List<T>> collection)
+        public async void LoadDataWarehouse(List<List<T>> transaction)
         {
-            _collection = collection ?? throw new DataWareHouseNotLoadedException();
+            _transactions = transaction ?? throw new DataWareHouseNotLoadedException();
 
-            _elements = await GetInstanceDistincts();
+            _itens = await GetInstanceDistincts();
         }
 
         private Task<List<T>> GetInstanceDistincts()
         {
-            if (_collection == null)
+            if (_transactions == null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
 
-            var distincts = new List<T>();
+            var itens = new List<T>();
 
-            foreach (var transaction in _collection)
+            foreach (var transaction in _transactions)
             {
                 foreach (var element in transaction)
                 {
-                    if (!distincts.Contains(element))
+                    if (!itens.Contains(element))
                     {
-                        distincts.Add(element);
+                        itens.Add(element);
                     }
                 }
             }
 
-            return Task.FromResult(distincts);
+            return Task.FromResult(itens);
         }
 
-        public Task<List<Metrics1Item<T>>> GetReport1ItemSets()
+        public async Task<List<Metrics1Item<T>>> GetReport1ItemSets()
         {
-            if (_collection == null)
+            if (_transactions == null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
 
             var metrics = new List<Metrics1Item<T>>();
 
-            foreach (var header in _elements)
+            foreach (var header in _itens)
             {
-                var quantity = _collection
+                var quantity = _transactions
                     .Where(t => t.Contains(header))
                     .Count();
 
-                var metric = new Metrics1Item<T>
-                {
-                    Item = header,
-                    Suport = (float)quantity / _collection.Count
-                };
+                var suport = (float) quantity / _transactions.Count;
 
-                metrics.Add(metric);
+                if (suport >= MinSuport)
+                {
+                    var metric = new Metrics1Item<T>
+                    {
+                        Item = header,
+                        Suport = suport
+                    };
+
+                    metrics.Add(metric);
+                }
             }
 
-            return Task.FromResult(metrics);
+            return await Task.FromResult(metrics);
         }
 
-        public Task<List<Metrics2Item<T>>> GetReport2ItemSets()
+        public async Task<List<Metrics2Item<T>>> GetReport2ItemSets()
         {
-            if (_collection == null)
+            if (_transactions == null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
+
+            var oneItemSets = GetReport1ItemSets();
 
             var metrics = new List<Metrics2Item<T>>();
 
             var combinations = new List<T[]>();
 
-            for (int i = 1; i < _elements.Count; ++i)
+            var item = (await oneItemSets).Select(m => m.Item).ToList();
+
+            for (int a = 0; a < item.Count; a++)
             {
-                for (int j = i; j < _elements.Count; ++j)
+                for (int b = a + 1; b < item.Count; b++)
                 {
-                    combinations.Add(new T[2] { _elements[i - 1], _elements[j] });
+                    combinations.Add(new T[2] { item[a], item[b] });
                 }
             }
 
@@ -94,110 +102,117 @@ namespace FluentAssociation
             {
                 // melhorar aplicando programação dinâmica futuramente
 
-                var countXandY = _collection
+                var countXandY = _transactions
                     .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
                     .Count();
 
-                var countX = _collection
+                var countX = _transactions
                     .Where(t => t.Contains(itens[0]))
                     .Count();
 
-                var suport = (float)countXandY / _collection.Count;
+                var suport = (float)countXandY / _transactions.Count;
 
-                var confidence = suport / ((float)countX / _collection.Count);
-
-                var metric = new Metrics2Item<T>
+                if (suport >= MinSuport)
                 {
-                    Item1 = itens[0],
-                    Item2 = itens[1],
-                    Suport = suport,
-                    Confidence = confidence
-                };
+                    var confidence = suport / ((float) countX / _transactions.Count);
 
-                metrics.Add(metric);
+                    var metric = new Metrics2Item<T>
+                    {
+                        Item1 = itens[0],
+                        Item2 = itens[1],
+                        Suport = suport,
+                        Confidence = confidence
+                    };
+
+                    metrics.Add(metric);
+                }
             }
 
-            return Task.FromResult(metrics);
+            return await Task.FromResult(metrics);
         }
 
-        public Task<List<Metrics3Item<T>>> GetReport3ItemSets()
+        public async Task<List<Metrics3Item<T>>> GetReport3ItemSets()
         {
-            if (_collection == null)
+            if (_transactions == null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
+
+            var oneItemSets = GetReport1ItemSets();
 
             var metrics = new List<Metrics3Item<T>>();
 
             var combinations = new List<T[]>();
 
-            for (int i = 2; i < _elements.Count; ++i)
+            var item = (await oneItemSets).Select(m => m.Item).ToList();
+
+            for (int a = 0; a < item.Count; a++)
             {
-                for (int j = i; j < _elements.Count; ++j)
+                for (int b = a + 1; b < item.Count; b++)
                 {
-                    for (int l = j; l < _elements.Count; ++l)
+                    for (int c = b + 1; c < item.Count; c++)
                     {
-                        combinations.Add(new T[3] {
-                            _elements[i - 2],
-                            _elements[j - 1],
-                            _elements[l] });
+                        combinations.Add(new T[3] { item[a], item[b], item[c] });
                     }
                 }
             }
 
             foreach (var itens in combinations)
             {
-                var countXandY = _collection
+                var countXandY = _transactions
                     .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
                     .Count();
 
-                var countX = _collection
+                var countX = _transactions
                     .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
                     .Count();
 
-                var suport = (float)countXandY / _collection.Count;
+                var suport = (float) countXandY / _transactions.Count;
 
-                var confidence = suport / ((float)countX / _collection.Count);
-
-                var metric = new Metrics3Item<T>
+                if (suport >= MinSuport)
                 {
-                    Item1 = itens[0],
-                    Item2 = itens[1],
-                    Item3 = itens[2],
-                    Suport = suport,
-                    Confidence = confidence
-                };
+                    var confidence = suport / ((float) countX / _transactions.Count);
 
-                metrics.Add(metric);
+                    var metric = new Metrics3Item<T>
+                    {
+                        Item1 = itens[0],
+                        Item2 = itens[1],
+                        Item3 = itens[2],
+                        Suport = suport,
+                        Confidence = confidence
+                    };
+
+                    metrics.Add(metric);
+                }
             }
 
-            return Task.FromResult(metrics);
+            return await Task.FromResult(metrics);
         }
 
-        public Task<List<Metrics4Item<T>>> GetReport4ItemSets()
+        public async Task<List<Metrics4Item<T>>> GetReport4ItemSets()
         {
-            if (_collection == null)
+            if (_transactions == null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
+
+            var oneItemSets = GetReport1ItemSets();
 
             var metrics = new List<Metrics4Item<T>>();
 
             var combinations = new List<T[]>();
 
-            for (int i = 3; i < _elements.Count; ++i)
+            var item = (await oneItemSets).Select(m => m.Item).ToList();
+
+            for (int a = 0; a < item.Count; a++)
             {
-                for (int j = i; j < _elements.Count; ++j)
+                for (int b = a + 1; b < item.Count; b++)
                 {
-                    for (int l = j; l < _elements.Count; ++l)
+                    for (int c = b + 1; c < item.Count; c++)
                     {
-                        for (int h = j; h < _elements.Count; ++h)
+                        for (int d = c + 1; d < item.Count; d++)
                         {
-                            combinations.Add(new T[4] {
-                                _elements[i - 3],
-                                _elements[j - 2],
-                                _elements[l - 1],
-                                _elements[h] });
+                            combinations.Add(new T[4] { item[a], item[b], item[c], item[d] });
                         }
                     }
                 }
@@ -205,32 +220,35 @@ namespace FluentAssociation
 
             foreach (var itens in combinations)
             {
-                var countXandY = _collection
+                var countXandY = _transactions
                     .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]) && t.Contains(itens[3]))
                     .Count();
 
-                var countX = _collection
+                var countX = _transactions
                     .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
                     .Count();
 
-                var suport = (float)countXandY / _collection.Count;
+                var suport = (float) countXandY / _transactions.Count;
 
-                var confidence = suport / ((float)countX / _collection.Count);
-
-                var metric = new Metrics4Item<T>
+                if (suport >= MinSuport)
                 {
-                    Item1 = itens[0],
-                    Item2 = itens[1],
-                    Item3 = itens[2],
-                    Item4 = itens[3],
-                    Suport = suport,
-                    Confidence = confidence
-                };
+                    var confidence = suport / ((float) countX / _transactions.Count);
 
-                metrics.Add(metric);
+                    var metric = new Metrics4Item<T>
+                    {
+                        Item1 = itens[0],
+                        Item2 = itens[1],
+                        Item3 = itens[2],
+                        Item4 = itens[3],
+                        Suport = suport,
+                        Confidence = confidence
+                    };
+
+                    metrics.Add(metric);
+                }
             }
 
-            return Task.FromResult(metrics);
+            return await Task.FromResult(metrics);
         }
     }
 }

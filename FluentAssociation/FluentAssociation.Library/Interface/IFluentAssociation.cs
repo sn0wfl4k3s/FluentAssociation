@@ -6,8 +6,7 @@ namespace FluentAssociation
 {
     public interface IFluentAssociation<T>
     {
-        float Suport { get; set; }
-        float Confidence { get; set; }
+        float MinSuport { get; set; }
         void LoadDataWarehouse(List<List<T>> collection);
         Task<List<Metrics1Item<T>>> GetReport1ItemSets();
         Task<List<Metrics2Item<T>>> GetReport2ItemSets();
