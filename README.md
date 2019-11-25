@@ -23,14 +23,15 @@ Instanciação e carregamento dos dados:
 Ou se for aplicação web, incluir na Startup.cs:  
 ![services](https://user-images.githubusercontent.com/30809620/68983591-754ddc00-07ea-11ea-8fb8-a4415ba6731f.PNG)  
 
-Depois é só usar um dos seguintes métodos para retornar uma lista de combinações dos diferentes elementos da lista juntamente com as métricas de Suporte (Suport) e Confiança (Confidence):
+Depois é só usar um dos seguintes métodos para obter um relatório que é basicamente uma lista de combinações dos diferentes elementos da lista juntamente com as métricas de Suporte (Suport) e Confiança (Confidence):
 
-* Get1ItemSets()  
-* Get2ItemSets()  
-* Get3ItemSets()  
-* Get4ItemSets()
+* GetReport1ItemSets()  
+* GetReport2ItemSets()  
+* GetReport3ItemSets()  
+* GetReport4ItemSets()
 
 
-
-Exemplo nos testes:  
-![teste](https://user-images.githubusercontent.com/30809620/68982733-f2775200-07e6-11ea-9b64-8fc5417e3fab.PNG)
+Exemplo de como obter o relatório de métricas:  
+![getMetrics](https://user-images.githubusercontent.com/30809620/69012694-5d479b00-0957-11ea-947e-5c0fae9dd947.PNG)  
+Exemplo de como obter o relatório com os de maior confiança:  
+![melhorConfianca](https://user-images.githubusercontent.com/30809620/69012701-66d10300-0957-11ea-90e4-57b1b2685aeb.PNG)
