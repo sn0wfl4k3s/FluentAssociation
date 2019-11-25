@@ -13,9 +13,9 @@ namespace FluentAssociation
 
         public float MinSuport { get; set; } = 0.2f;
 
-        public async void LoadDataWarehouse(List<List<T>> transaction)
+        public async void LoadDataWarehouse(List<List<T>> transactions)
         {
-            _transactions = transaction ?? throw new DataWareHouseNotLoadedException();
+            _transactions = transactions ?? throw new DataWareHouseNotLoadedException();
 
             _itens = await GetInstanceDistincts();
         }

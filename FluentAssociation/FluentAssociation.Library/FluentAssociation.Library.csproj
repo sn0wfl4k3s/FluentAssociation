@@ -6,16 +6,15 @@
     <Authors>Snowflakes</Authors>
     <Product>FluentAssociation</Product>
     <Description>Uma biblioteca de data-mining para encontrar elementos fortemente conectados em uma base de dados mesmo aparentemente desconexos usando o algoritmo apriori.</Description>
-    <PackageProjectUrl>https://github.com/snowflakesss/FluentAssociation</PackageProjectUrl>
+    <PackageProjectUrl></PackageProjectUrl>
     <PackageIcon>Association.png</PackageIcon>
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/snowflakesss/FluentAssociation</RepositoryUrl>
     <PackageTags>data-mining;csharp;netstandard;association;association-rules;apriori-algorithm;dotnet</PackageTags>
-    <AssemblyVersion>1.0.0.3</AssemblyVersion>
-    <FileVersion>1.0.0.3</FileVersion>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>-Inclusão de exception quando dados não são carregados.
--Inclusão de método GetItemSet() para localizar métricas de elementos específicos.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>- melhorias no GetReportItemSets() para retornar apenas métricas com suporte 20% (default) ou com o  suporte especificado no atributo MinSuport após a instanciação do FluentAssociation&lt;T&gt;.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
