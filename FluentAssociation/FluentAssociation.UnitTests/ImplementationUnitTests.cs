@@ -96,5 +96,25 @@ namespace FluentAssociation.UnitTests
 
             melhorConfiança.Suport.Should().BeApproximately(0.3f, 1);
         }
+        
+        [Fact]
+        public async void Nao_deve_haver_itemset_com_suport_maior_que_dois ()
+        {
+            var metrics1 = await _service.GetReport1ItemSets();
+
+            var metrics2 = await _service.GetReport2ItemSets();
+            
+            var metrics3 = await _service.GetReport3ItemSets();
+            
+            var metrics4 = await _service.GetReport4ItemSets();
+
+            metrics1.Where(m => m.Suport < _service.MinSuport).Count().Should().Be(0);
+            
+            metrics2.Where(m => m.Suport < _service.MinSuport).Count().Should().Be(0);
+            
+            metrics3.Where(m => m.Suport < _service.MinSuport).Count().Should().Be(0);
+            
+            metrics4.Where(m => m.Suport < _service.MinSuport).Count().Should().Be(0);
+        }
     }
 }
