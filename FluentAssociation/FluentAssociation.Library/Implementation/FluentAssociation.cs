@@ -90,9 +90,9 @@ namespace FluentAssociation
 
             var item = (await oneItemSets).Select(m => m.Item).ToList();
 
-            for (int a = 0; a < item.Count; a++)
+            for (int a = 0; a < item.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; b++)
+                for (int b = a + 1; b < item.Count; ++b)
                 {
                     combinations.Add(new T[2] { item[a], item[b] });
                 }
@@ -100,8 +100,6 @@ namespace FluentAssociation
 
             foreach (var itens in combinations)
             {
-                // melhorar aplicando programação dinâmica futuramente
-
                 var countXandY = _transactions
                     .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
                     .Count();
@@ -146,11 +144,11 @@ namespace FluentAssociation
 
             var item = (await oneItemSets).Select(m => m.Item).ToList();
 
-            for (int a = 0; a < item.Count; a++)
+            for (int a = 0; a < item.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; b++)
+                for (int b = a + 1; b < item.Count; ++b)
                 {
-                    for (int c = b + 1; c < item.Count; c++)
+                    for (int c = b + 1; c < item.Count; ++c)
                     {
                         combinations.Add(new T[3] { item[a], item[b], item[c] });
                     }
@@ -204,13 +202,13 @@ namespace FluentAssociation
 
             var item = (await oneItemSets).Select(m => m.Item).ToList();
 
-            for (int a = 0; a < item.Count; a++)
+            for (int a = 0; a < item.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; b++)
+                for (int b = a + 1; b < item.Count; ++b)
                 {
-                    for (int c = b + 1; c < item.Count; c++)
+                    for (int c = b + 1; c < item.Count; ++c)
                     {
-                        for (int d = c + 1; d < item.Count; d++)
+                        for (int d = c + 1; d < item.Count; ++d)
                         {
                             combinations.Add(new T[4] { item[a], item[b], item[c], item[d] });
                         }
