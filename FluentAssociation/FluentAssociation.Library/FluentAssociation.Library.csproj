@@ -11,10 +11,10 @@
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/snowflakesss/FluentAssociation</RepositoryUrl>
     <PackageTags>data-mining;csharp;netstandard;association;association-rules;apriori-algorithm;dotnet</PackageTags>
-    <AssemblyVersion>1.0.0.4</AssemblyVersion>
-    <FileVersion>1.0.0.4</FileVersion>
-    <Version>1.0.4</Version>
-    <PackageReleaseNotes>- melhorias no GetReportItemSets() para retornar apenas métricas com suporte 20% (default) ou com o  suporte especificado no atributo MinSuport após a instanciação do FluentAssociation&lt;T&gt;.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <FileVersion>1.0.0.5</FileVersion>
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>- melhorias no desempenho da geração de métricas.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
