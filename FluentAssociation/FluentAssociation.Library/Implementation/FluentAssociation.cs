@@ -86,45 +86,38 @@ namespace FluentAssociation
 
             var metrics = new List<Metrics2Item<T>>();
 
-            var combinations = new List<T[]>();
-
             var item = (await oneItemSets).Select(m => m.Item).ToList();
 
-            for (int a = 0; a < item.Count; a++)
+            for (int a = 0; a < item.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; b++)
+                for (int b = a + 1; b < item.Count; ++b)
                 {
-                    combinations.Add(new T[2] { item[a], item[b] });
-                }
-            }
+                    var itens = new T[2] { item[a], item[b] };
 
-            foreach (var itens in combinations)
-            {
-                // melhorar aplicando programação dinâmica futuramente
+                    var countXandY = _transactions
+                        .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
+                        .Count();
 
-                var countXandY = _transactions
-                    .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
-                    .Count();
+                    var countX = _transactions
+                        .Where(t => t.Contains(itens[0]))
+                        .Count();
 
-                var countX = _transactions
-                    .Where(t => t.Contains(itens[0]))
-                    .Count();
+                    var suport = (float)countXandY / _transactions.Count;
 
-                var suport = (float)countXandY / _transactions.Count;
-
-                if (suport >= MinSuport)
-                {
-                    var confidence = suport / ((float) countX / _transactions.Count);
-
-                    var metric = new Metrics2Item<T>
+                    if (suport >= MinSuport)
                     {
-                        Item1 = itens[0],
-                        Item2 = itens[1],
-                        Suport = suport,
-                        Confidence = confidence
-                    };
+                        var confidence = suport / ((float)countX / _transactions.Count);
 
-                    metrics.Add(metric);
+                        var metric = new Metrics2Item<T>
+                        {
+                            Item1 = itens[0],
+                            Item2 = itens[1],
+                            Suport = suport,
+                            Confidence = confidence
+                        };
+
+                        metrics.Add(metric);
+                    }
                 }
             }
 
@@ -142,47 +135,42 @@ namespace FluentAssociation
 
             var metrics = new List<Metrics3Item<T>>();
 
-            var combinations = new List<T[]>();
-
             var item = (await oneItemSets).Select(m => m.Item).ToList();
 
-            for (int a = 0; a < item.Count; a++)
+            for (int a = 0; a < item.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; b++)
+                for (int b = a + 1; b < item.Count; ++b)
                 {
-                    for (int c = b + 1; c < item.Count; c++)
+                    for (int c = b + 1; c < item.Count; ++c)
                     {
-                        combinations.Add(new T[3] { item[a], item[b], item[c] });
+                        var itens = new T[3] { item[a], item[b], item[c] };
+
+                        var countXandY = _transactions
+                            .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
+                            .Count();
+
+                        var countX = _transactions
+                            .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
+                            .Count();
+
+                        var suport = (float)countXandY / _transactions.Count;
+
+                        if (suport >= MinSuport)
+                        {
+                            var confidence = suport / ((float)countX / _transactions.Count);
+
+                            var metric = new Metrics3Item<T>
+                            {
+                                Item1 = itens[0],
+                                Item2 = itens[1],
+                                Item3 = itens[2],
+                                Suport = suport,
+                                Confidence = confidence
+                            };
+
+                            metrics.Add(metric);
+                        }
                     }
-                }
-            }
-
-            foreach (var itens in combinations)
-            {
-                var countXandY = _transactions
-                    .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
-                    .Count();
-
-                var countX = _transactions
-                    .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
-                    .Count();
-
-                var suport = (float) countXandY / _transactions.Count;
-
-                if (suport >= MinSuport)
-                {
-                    var confidence = suport / ((float) countX / _transactions.Count);
-
-                    var metric = new Metrics3Item<T>
-                    {
-                        Item1 = itens[0],
-                        Item2 = itens[1],
-                        Item3 = itens[2],
-                        Suport = suport,
-                        Confidence = confidence
-                    };
-
-                    metrics.Add(metric);
                 }
             }
 
@@ -200,51 +188,46 @@ namespace FluentAssociation
 
             var metrics = new List<Metrics4Item<T>>();
 
-            var combinations = new List<T[]>();
-
             var item = (await oneItemSets).Select(m => m.Item).ToList();
 
-            for (int a = 0; a < item.Count; a++)
+            for (int a = 0; a < item.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; b++)
+                for (int b = a + 1; b < item.Count; ++b)
                 {
-                    for (int c = b + 1; c < item.Count; c++)
+                    for (int c = b + 1; c < item.Count; ++c)
                     {
-                        for (int d = c + 1; d < item.Count; d++)
+                        for (int d = c + 1; d < item.Count; ++d)
                         {
-                            combinations.Add(new T[4] { item[a], item[b], item[c], item[d] });
+                            var itens = new T[4] { item[a], item[b], item[c], item[d] };
+
+                            var countXandY = _transactions
+                                .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]) && t.Contains(itens[3]))
+                                .Count();
+
+                            var countX = _transactions
+                                .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
+                                .Count();
+
+                            var suport = (float)countXandY / _transactions.Count;
+
+                            if (suport >= MinSuport)
+                            {
+                                var confidence = suport / ((float)countX / _transactions.Count);
+
+                                var metric = new Metrics4Item<T>
+                                {
+                                    Item1 = itens[0],
+                                    Item2 = itens[1],
+                                    Item3 = itens[2],
+                                    Item4 = itens[3],
+                                    Suport = suport,
+                                    Confidence = confidence
+                                };
+
+                                metrics.Add(metric);
+                            }
                         }
                     }
-                }
-            }
-
-            foreach (var itens in combinations)
-            {
-                var countXandY = _transactions
-                    .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]) && t.Contains(itens[3]))
-                    .Count();
-
-                var countX = _transactions
-                    .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
-                    .Count();
-
-                var suport = (float) countXandY / _transactions.Count;
-
-                if (suport >= MinSuport)
-                {
-                    var confidence = suport / ((float) countX / _transactions.Count);
-
-                    var metric = new Metrics4Item<T>
-                    {
-                        Item1 = itens[0],
-                        Item2 = itens[1],
-                        Item3 = itens[2],
-                        Item4 = itens[3],
-                        Suport = suport,
-                        Confidence = confidence
-                    };
-
-                    metrics.Add(metric);
                 }
             }
 
