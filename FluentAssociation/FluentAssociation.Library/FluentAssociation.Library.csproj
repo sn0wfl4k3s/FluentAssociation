@@ -18,7 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\Association.png">
+    <None Include="..\..\..\..\..\..\Pictures\Association.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include=".\">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
