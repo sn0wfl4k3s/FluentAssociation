@@ -22,7 +22,7 @@ jobs:
         cd FluentAssociation/
         dotnet build --configuration Release --no-restore
     - name: Publish to NuGet
-      uses: Rebel028/publish-nuget@v2.5.7
+      uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: FluentAssociation/FluentAssociation.Library/FluentAssociation.Library.csproj
         VERSION_REGEX: '^\s*<Version>(.*)<\/Version>\s*$'
