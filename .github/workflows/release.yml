@@ -14,9 +14,13 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     - name: Install dependencies
-      run: dotnet restore
+      run: |
+        cd FluentAssoction/
+        dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: |
+        cd FluentAssociation/
+        dotnet build --configuration Release --no-restore
     - name: Publish to NuGet
       uses: brandedoutcast/publish-nuget@v2
       with:
