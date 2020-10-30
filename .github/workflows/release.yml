@@ -25,6 +25,6 @@ jobs:
       uses: Rebel028/publish-nuget@v2.5.7
       with:
         PROJECT_FILE_PATH: FluentAssociation/FluentAssociation.Library/FluentAssociation.Library.csproj
-        VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
+        VERSION_REGEX: '^\s*<Version>(.*)<\/Version>\s*$'
         TAG_FORMAT: '*'
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
