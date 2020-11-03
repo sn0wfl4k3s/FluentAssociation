@@ -9,62 +9,47 @@ namespace FluentAssociation
     public class FluentAssociation<T> : IFluentAssociation<T>
     {
         private List<List<T>> _transactions;
-        private List<T> _itens;
+        private List<T> _distinctItems;
 
-        public float MinSuport { get; set; } = 0.2f;
+        public float MinSuport { get; set; } = .2f;
 
         public async void LoadDataWarehouse(List<List<T>> transactions)
         {
             _transactions = transactions ?? throw new DataWareHouseNotLoadedException();
 
-            _itens = await GetInstanceDistincts();
+            _distinctItems = await GetInstanceDistincts();
         }
 
         private Task<List<T>> GetInstanceDistincts()
         {
-            if (_transactions == null)
-            {
-                throw new DataWareHouseNotLoadedException();
-            }
+            var items = _transactions
+                .SelectMany(transacao => transacao.Select(item => item))
+                .Distinct()
+                .ToList();
 
-            var itens = new List<T>();
-
-            foreach (var transaction in _transactions)
-            {
-                foreach (var element in transaction)
-                {
-                    if (!itens.Contains(element))
-                    {
-                        itens.Add(element);
-                    }
-                }
-            }
-
-            return Task.FromResult(itens);
+            return Task.FromResult(items);
         }
 
         public async Task<List<Metrics1Item<T>>> GetReport1ItemSets()
         {
-            if (_transactions == null)
+            if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
 
             var metrics = new List<Metrics1Item<T>>();
 
-            foreach (var header in _itens)
+            for (int i = 0; i < _distinctItems.Count; ++i)
             {
-                var quantity = _transactions
-                    .Where(t => t.Contains(header))
-                    .Count();
+                int itemQuantity = _transactions.Count(t => t.Contains(_distinctItems[i]));
 
-                var suport = (float) quantity / _transactions.Count;
+                float suport = (float)itemQuantity / _transactions.Count;
 
                 if (suport >= MinSuport)
                 {
                     var metric = new Metrics1Item<T>
                     {
-                        Item = header,
+                        Item = _distinctItems[i],
                         Suport = suport
                     };
 
@@ -77,41 +62,31 @@ namespace FluentAssociation
 
         public async Task<List<Metrics2Item<T>>> GetReport2ItemSets()
         {
-            if (_transactions == null)
+            if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
 
-            var oneItemSets = GetReport1ItemSets();
-
             var metrics = new List<Metrics2Item<T>>();
 
-            var item = (await oneItemSets).Select(m => m.Item).ToList();
-
-            for (int a = 0; a < item.Count; ++a)
+            for (int a = 0; a < _distinctItems.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; ++b)
+                for (int b = a + 1; b < _distinctItems.Count; ++b)
                 {
-                    var itens = new T[2] { item[a], item[b] };
+                    int countXandY = _transactions.Count(t => t.Contains(_distinctItems[a]) && t.Contains(_distinctItems[b]));
 
-                    var countXandY = _transactions
-                        .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
-                        .Count();
+                    int countX = _transactions.Count(t => t.Contains(_distinctItems[a]));
 
-                    var countX = _transactions
-                        .Where(t => t.Contains(itens[0]))
-                        .Count();
-
-                    var suport = (float)countXandY / _transactions.Count;
+                    float suport = (float)countXandY / _transactions.Count;
 
                     if (suport >= MinSuport)
                     {
-                        var confidence = suport / ((float)countX / _transactions.Count);
+                        float confidence = suport / ((float)countX / _transactions.Count);
 
                         var metric = new Metrics2Item<T>
                         {
-                            Item1 = itens[0],
-                            Item2 = itens[1],
+                            Item1 = _distinctItems[a],
+                            Item2 = _distinctItems[b],
                             Suport = suport,
                             Confidence = confidence
                         };
@@ -126,44 +101,34 @@ namespace FluentAssociation
 
         public async Task<List<Metrics3Item<T>>> GetReport3ItemSets()
         {
-            if (_transactions == null)
+            if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
 
-            var oneItemSets = GetReport1ItemSets();
-
             var metrics = new List<Metrics3Item<T>>();
 
-            var item = (await oneItemSets).Select(m => m.Item).ToList();
-
-            for (int a = 0; a < item.Count; ++a)
+            for (int a = 0; a < _distinctItems.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; ++b)
+                for (int b = a + 1; b < _distinctItems.Count; ++b)
                 {
-                    for (int c = b + 1; c < item.Count; ++c)
+                    for (int c = b + 1; c < _distinctItems.Count; ++c)
                     {
-                        var itens = new T[3] { item[a], item[b], item[c] };
+                        int countXandY = _transactions.Count(t => t.Contains(_distinctItems[a]) && t.Contains(_distinctItems[b]) && t.Contains(_distinctItems[c]));
 
-                        var countXandY = _transactions
-                            .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
-                            .Count();
+                        int countX = _transactions.Count(t => t.Contains(_distinctItems[a]) && t.Contains(_distinctItems[b]));
 
-                        var countX = _transactions
-                            .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]))
-                            .Count();
-
-                        var suport = (float)countXandY / _transactions.Count;
+                        float suport = (float)countXandY / _transactions.Count;
 
                         if (suport >= MinSuport)
                         {
-                            var confidence = suport / ((float)countX / _transactions.Count);
+                            float confidence = suport / ((float)countX / _transactions.Count);
 
                             var metric = new Metrics3Item<T>
                             {
-                                Item1 = itens[0],
-                                Item2 = itens[1],
-                                Item3 = itens[2],
+                                Item1 = _distinctItems[a],
+                                Item2 = _distinctItems[b],
+                                Item3 = _distinctItems[c],
                                 Suport = suport,
                                 Confidence = confidence
                             };
@@ -179,47 +144,37 @@ namespace FluentAssociation
 
         public async Task<List<Metrics4Item<T>>> GetReport4ItemSets()
         {
-            if (_transactions == null)
+            if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
             }
 
-            var oneItemSets = GetReport1ItemSets();
-
             var metrics = new List<Metrics4Item<T>>();
 
-            var item = (await oneItemSets).Select(m => m.Item).ToList();
-
-            for (int a = 0; a < item.Count; ++a)
+            for (int a = 0; a < _distinctItems.Count; ++a)
             {
-                for (int b = a + 1; b < item.Count; ++b)
+                for (int b = a + 1; b < _distinctItems.Count; ++b)
                 {
-                    for (int c = b + 1; c < item.Count; ++c)
+                    for (int c = b + 1; c < _distinctItems.Count; ++c)
                     {
-                        for (int d = c + 1; d < item.Count; ++d)
+                        for (int d = c + 1; d < _distinctItems.Count; ++d)
                         {
-                            var itens = new T[4] { item[a], item[b], item[c], item[d] };
+                            int countXandY = _transactions.Count(t => t.Contains(_distinctItems[a]) && t.Contains(_distinctItems[b]) && t.Contains(_distinctItems[c]) && t.Contains(_distinctItems[d]));
 
-                            var countXandY = _transactions
-                                .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]) && t.Contains(itens[3]))
-                                .Count();
+                            int countX = _transactions.Count(t => t.Contains(_distinctItems[a]) && t.Contains(_distinctItems[b]) && t.Contains(_distinctItems[c]));
 
-                            var countX = _transactions
-                                .Where(t => t.Contains(itens[0]) && t.Contains(itens[1]) && t.Contains(itens[2]))
-                                .Count();
-
-                            var suport = (float)countXandY / _transactions.Count;
+                            float suport = (float)countXandY / _transactions.Count;
 
                             if (suport >= MinSuport)
                             {
-                                var confidence = suport / ((float)countX / _transactions.Count);
+                                float confidence = suport / ((float)countX / _transactions.Count);
 
                                 var metric = new Metrics4Item<T>
                                 {
-                                    Item1 = itens[0],
-                                    Item2 = itens[1],
-                                    Item3 = itens[2],
-                                    Item4 = itens[3],
+                                    Item1 = _distinctItems[a],
+                                    Item2 = _distinctItems[b],
+                                    Item3 = _distinctItems[c],
+                                    Item4 = _distinctItems[d],
                                     Suport = suport,
                                     Confidence = confidence
                                 };
