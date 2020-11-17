@@ -13,15 +13,22 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.x'
-    - name: Install dependencies
+    - name: Instalando as dependências
       run: |
         cd FluentAssociation/
         dotnet restore
-    - name: Build
+        
+    - name: Excecutando os Testes
+      run: |
+        cd FluentAssociation/
+        dotnet test --nologo --verbosity normal
+    
+    - name: Buildando os pacotes
       run: |
         cd FluentAssociation/
         dotnet build --configuration Release --no-restore
-    - name: Publish to NuGet
+    
+    - name: Publicando no Nuget
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: FluentAssociation/FluentAssociation.Library/FluentAssociation.Library.csproj
