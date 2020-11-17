@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+	<LangVersion>preview</LangVersion>
     <PackageId>FluentAssociation</PackageId>
     <Authors>Snowflakes</Authors>
     <Product>FluentAssociation</Product>

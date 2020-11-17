@@ -11,6 +11,10 @@ namespace FluentAssociation
         /// </summary>
         float MinSuport { get; set; }
         /// <summary>
+        /// Return the distinct items in the transactions laded.
+        /// </summary>
+        List<T> GetDistinctItems { get; }
+        /// <summary>
         /// This method is responsible by load the data and then separate the different elements.
         /// </summary>
         /// <param name="collection">Data warehouse collection or all transactions in a register.</param>

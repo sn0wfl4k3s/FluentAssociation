@@ -1,5 +1,6 @@
 ﻿using FluentAssociation.Library.Exception;
 using FluentAssociation.Library.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,25 +10,36 @@ namespace FluentAssociation
     public class FluentAssociation<T> : IFluentAssociation<T>
     {
         private List<List<T>> _transactions;
-        private List<T> _distinctItems;
+        private List<T> _distinctItems = new();
+        private float _minSuport = .2f;
 
-        public float MinSuport { get; set; } = .2f;
+        public float MinSuport 
+        {
+            get => _minSuport;
+            set
+            {
+                if (value is < 0 or > 1)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                _minSuport = value;
+            }
+        }
+
+        public List<T> GetDistinctItems 
+            => _transactions is null ? throw new DataWareHouseNotLoadedException() : _distinctItems;
 
         public async void LoadDataWarehouse(List<List<T>> transactions)
         {
-            _transactions = transactions ?? throw new DataWareHouseNotLoadedException();
+            _transactions = transactions ?? throw new ArgumentNullException();
 
-            _distinctItems = await GetInstanceDistincts();
-        }
-
-        private Task<List<T>> GetInstanceDistincts()
-        {
-            var items = _transactions
+            _distinctItems = _transactions
                 .SelectMany(transacao => transacao.Select(item => item))
                 .Distinct()
                 .ToList();
 
-            return Task.FromResult(items);
+            await Task.CompletedTask;
         }
 
         public async Task<List<Metrics1Item<T>>> GetReport1ItemSets()
@@ -35,6 +47,11 @@ namespace FluentAssociation
             if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
+            }
+
+            if (_distinctItems.Count is 0)
+            {
+                throw new DistinctItemsLengthTooLowException();
             }
 
             var metrics = new List<Metrics1Item<T>>();
@@ -65,6 +82,11 @@ namespace FluentAssociation
             if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
+            }
+
+            if (_distinctItems.Count < 2)
+            {
+                throw new DistinctItemsLengthTooLowException();
             }
 
             var metrics = new List<Metrics2Item<T>>();
@@ -104,6 +126,11 @@ namespace FluentAssociation
             if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
+            }
+
+            if (_distinctItems.Count < 3)
+            {
+                throw new DistinctItemsLengthTooLowException();
             }
 
             var metrics = new List<Metrics3Item<T>>();
@@ -147,6 +174,11 @@ namespace FluentAssociation
             if (_transactions is null)
             {
                 throw new DataWareHouseNotLoadedException();
+            }
+
+            if (_distinctItems.Count < 4)
+            {
+                throw new DistinctItemsLengthTooLowException();
             }
 
             var metrics = new List<Metrics4Item<T>>();
