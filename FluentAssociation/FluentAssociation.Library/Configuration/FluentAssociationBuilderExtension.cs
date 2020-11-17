@@ -4,9 +4,9 @@ namespace FluentAssociation
 {
     public static class FluentAssociationBuilderExtension
     {
-        public static void AddFluentAssociation(this IServiceCollection services)
+        public static void AddFluentAssociation<T>(this IServiceCollection services)
         {
-            services.AddTransient(typeof(IFluentAssociation<>), typeof(FluentAssociation<>));
+            services.AddTransient(typeof(IFluentAssociation<T>), typeof(FluentAssociation<T>));
         }
     }
 }
