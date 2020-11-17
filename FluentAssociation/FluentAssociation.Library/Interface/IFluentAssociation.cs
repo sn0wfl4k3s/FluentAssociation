@@ -7,9 +7,15 @@ namespace FluentAssociation
     public interface IFluentAssociation<T>
     {
         /// <summary>
-        /// The minimum support for results in reports itemsets. The range should be from 0 to 1.
+        /// The minimum support for results in reports itemsets. 
+        /// The range should be from 0 to 1. 
+        /// The value is 0.2 by default. 
         /// </summary>
         float MinSuport { get; set; }
+        /// <summary>
+        /// Return the distinct items in the transactions laded.
+        /// </summary>
+        List<T> GetDistinctItems { get; }
         /// <summary>
         /// This method is responsible by load the data and then separate the different elements.
         /// </summary>

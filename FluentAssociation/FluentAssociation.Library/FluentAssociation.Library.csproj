@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+	<LangVersion>preview</LangVersion>
     <PackageId>FluentAssociation</PackageId>
     <Authors>Snowflakes</Authors>
     <Product>FluentAssociation</Product>
@@ -11,10 +12,12 @@
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/snowflakesss/FluentAssociation</RepositoryUrl>
     <PackageTags>data-mining;csharp;netstandard;association;association-rules;apriori-algorithm;dotnet</PackageTags>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0</Version>
-    <PackageReleaseNotes>- melhorias de desempenho</PackageReleaseNotes>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <FileVersion>1.1.1.0</FileVersion>
+    <Version>1.1.1</Version>
+    <PackageReleaseNotes>- Inclusão de método para retornar os itens distintos das transações carregadas.
+- Inclusão de exceção quando a quantidade de itens distintos é menor que o número de ItemSets.
+- Inclusão de verificação se o número settado na propriedade MinSuport está dentro do range de 0 a 1.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
