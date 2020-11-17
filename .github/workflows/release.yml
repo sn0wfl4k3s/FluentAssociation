@@ -18,7 +18,7 @@ jobs:
         cd FluentAssociation/
         dotnet restore
         
-    - name: Excecutando os Testes
+    - name: Executando os Testes
       run: |
         cd FluentAssociation/
         dotnet test --nologo --verbosity normal
