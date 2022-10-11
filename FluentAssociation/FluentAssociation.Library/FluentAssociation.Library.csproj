@@ -6,19 +6,20 @@
     <PackageId>FluentAssociation</PackageId>
     <Authors>Snowflakes</Authors>
     <Product>FluentAssociation</Product>
-    <Description>Uma biblioteca de data-mining para encontrar elementos fortemente conectados em uma base de dados mesmo aparentemente desconexos usando o algoritmo apriori.</Description>
+    <Description>A data mining library for finding tightly connected elements in a database using apriori algorithm and association rules.</Description>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageIcon>Association.png</PackageIcon>
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/snowflakesss/FluentAssociation</RepositoryUrl>
     <PackageTags>data-mining;csharp;netstandard;association;association-rules;apriori-algorithm;dotnet</PackageTags>
-    <AssemblyVersion>1.1.2.0</AssemblyVersion>
-    <FileVersion>1.1.2.0</FileVersion>
-    <Version>1.1.2</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.0</Version>
     <PackageReleaseNotes>- Inclusão de método para retornar os itens distintos das transações carregadas.
 - Inclusão de exceção quando a quantidade de itens distintos é menor que o número de ItemSets.
 - Inclusão de verificação se o número settado na propriedade MinSuport está dentro do range de 0 a 1.
 - Inclusão de tipagem ao inserir AddFluentAssociation no IServiceCollection para aplicações web.</PackageReleaseNotes>
+    <Title>FluentAssociation</Title>
   </PropertyGroup>
 
   <ItemGroup>
