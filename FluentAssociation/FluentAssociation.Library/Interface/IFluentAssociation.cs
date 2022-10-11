@@ -9,7 +9,7 @@ namespace FluentAssociation
         /// <summary>
         /// The minimum support for results in reports itemsets. 
         /// The range should be from 0 to 1. 
-        /// The value is 0.2 by default. 
+        /// The value is 0 by default. 
         /// </summary>
         float MinSuport { get; set; }
         /// <summary>
@@ -37,5 +37,11 @@ namespace FluentAssociation
         /// get asynchronously an itemsets table with 4 combinations.
         /// </summary>
         Task<List<Metrics4Item<T>>> GetReport4ItemSets();
+        /// <summary>
+        /// get asynchronously an itemsets table with a number of combinations defined in parameter quantity.
+        /// </summary>
+        /// <param name="quantity">Quantity of combinations in an itemsets. The default is 1.</param>
+        /// <returns></returns>
+        Task<List<MetricsItem<T>>> GetReportItemSets(ushort quantity = 1);
     }
 }
