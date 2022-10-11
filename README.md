@@ -1,37 +1,40 @@
 # FluentAssociation
-Uma biblioteca para realizar data-mining para encontrar elementos fortemente conectados em uma base de dados.
+A data mining library for finding tightly connected elements in a database using apriori algorithm and association rules.
 
-## Instalação
-Download pelo dotnet cli:  
+## Installation
+Download by dotnet cli:  
 
 ```   
   Install-Package FluentAssociation  
 ```
 
-## Introdução
-Ok, imagina esse caso:
-> Uma das maiores redes de varejo dos Estados Unidos descobriu, em seu gigantesco armazém de dados, que a venda de fraldas descartáveis estava associada à de cerveja. Em geral, os compradores eram homens, que saíam à noite para comprar fraldas e aproveitavam para levar algumas latinhas para casa. Os produtos foram postos lado a lado. Resultado: a venda de fraldas e cervejas disparou.
+### Release Notes
+- Inclusion of method GetReportItemSets(ushort quantity), 
+that can generate reports with any quantity of itemSets.
+- Change to 0 the MinSuport property default value in FluentAssociation instance.
 
-*Referências:*  
-*Exame: [O que cerveja tem a ver com fraldas?](https://exame.abril.com.br/revista-exame/o-que-cerveja-tem-a-ver-com-fraldas-m0053931/)*  
-*Medium: [A inteligencia em comprar Cerveja e Fraldas](https://medium.com/@wonderwanny/a-inteligencia-em-comprar-cerveja-e-fraldas-a617899556)*
+### Use Mode:
 
-### Modo de uso:
+Data instantiation and loading:		
 
-Instanciação e carregamento dos dados:  
-![Inicio](https://user-images.githubusercontent.com/30809620/68982274-16399880-07e5-11ea-84ab-f3cf84707817.PNG)  
-Ou se for aplicação web, incluir na Startup.cs:  
+![image](https://user-images.githubusercontent.com/30809620/195217760-de9a479b-698e-45f9-8fdc-42e910c9f191.png)  
+
+Or if it is a web application, include in Startup.cs:		
+
 ![services](https://user-images.githubusercontent.com/30809620/68983591-754ddc00-07ea-11ea-8fb8-a4415ba6731f.PNG)  
 
-Depois é só usar um dos seguintes métodos para obter um relatório que é basicamente uma lista de combinações dos diferentes elementos da lista juntamente com as métricas de Suporte (Suport) e Confiança (Confidence):
+Then just use one of the following methods to get a report that is basically a list of combinations of the
+different list elements along with Support and Confidence metrics:
 
 * GetReport1ItemSets()  
 * GetReport2ItemSets()  
 * GetReport3ItemSets()  
 * GetReport4ItemSets()
+* GetReportItemSets(ushort quantity)
+
+Example of how to get the metrics report:  
+![image](https://user-images.githubusercontent.com/30809620/195216806-b0f9d57c-431a-4289-8aca-9ff8b106fdb3.png)  
 
 
-Exemplo de como obter o relatório de métricas:  
-![getMetrics](https://user-images.githubusercontent.com/30809620/69012694-5d479b00-0957-11ea-947e-5c0fae9dd947.PNG)  
-Exemplo de como obter o relatório com os de maior confiança:  
-![melhorConfianca](https://user-images.githubusercontent.com/30809620/69012701-66d10300-0957-11ea-90e4-57b1b2685aeb.PNG)
+Example of how to get the most reliable report:  
+![image](https://user-images.githubusercontent.com/30809620/195217130-485b0fbc-913d-46dc-bbb4-ac8835fa749f.png)

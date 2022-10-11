@@ -1,4 +1,5 @@
 ﻿using FluentAssociation.Library.Exception;
+using FluentAssociation.Library.Extension;
 using FluentAssociation.Library.Model;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace FluentAssociation
     {
         private List<List<T>> _transactions;
         private List<T> _distinctItems = new();
-        private float _minSuport = .2f;
+        private float _minSuport = 0;
 
-        public float MinSuport 
+        public float MinSuport
         {
             get => _minSuport;
             set
@@ -27,7 +28,7 @@ namespace FluentAssociation
             }
         }
 
-        public List<T> GetDistinctItems 
+        public List<T> GetDistinctItems
             => _transactions is null ? throw new DataWareHouseNotLoadedException() : _distinctItems;
 
         public async void LoadDataWarehouse(List<List<T>> transactions)
@@ -219,6 +220,60 @@ namespace FluentAssociation
             }
 
             return await Task.FromResult(metrics);
+        }
+
+        public async Task<List<MetricsItem<T>>> GetReportItemSets(ushort quantity = 1)
+        {
+            if (_transactions is null)
+            {
+                throw new DataWareHouseNotLoadedException();
+            }
+
+            if (quantity > _distinctItems.Count)
+            {
+                throw new QuantityGreaterThanDistinctItemsException();
+            }
+
+            if (_distinctItems.Count < 2)
+            {
+                throw new DistinctItemsLengthTooLowException();
+            }
+
+            var combinations = quantity switch
+            {
+                0 => Enumerable.Empty<MetricsItem<T>>(),
+
+                1 => _distinctItems
+                    .Select(item => new MetricsItem<T>
+                    {
+                        Items = new T[] { item },
+                        Suport = (float)_transactions.LongCount(t => t.Contains(item)) / _transactions.Count
+                    })
+                    .Where(m => m.Suport >= MinSuport),
+
+                _ => _distinctItems
+                    .CombinationsOf(quantity)
+                    .Select(items =>
+                    {
+                        long countXandY = _transactions.LongCount(t => items.All(i => t.Contains(i)));
+
+                        long countX = _transactions.LongCount(t => items.SkipLast(1).All(i => t.Contains(i)));
+
+                        float suport = (float)countXandY / _transactions.Count;
+
+                        float confidence = suport / ((float)countX / _transactions.Count);
+
+                        return new MetricsItem<T>
+                        {
+                            Items = items,
+                            Suport = suport,
+                            Confidence = confidence,
+                        };
+                    })
+                    .Where(m => m.Suport >= MinSuport)
+            };
+
+            return await Task.FromResult(combinations.ToList());
         }
     }
 }
