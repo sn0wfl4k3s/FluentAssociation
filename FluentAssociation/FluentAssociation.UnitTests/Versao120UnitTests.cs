@@ -11,23 +11,23 @@ namespace FluentAssociation.UnitTests
 
         public Versao120UnitTests()
         {
-            var lista = new List<List<string>>
+            var transactions = new List<List<string>>
             {
-                new List<string> { "leite", "ovos", "café", "açúcar", "fraldas", "manteiga" },
-                new List<string> { "leite", "café", "farinha" },
-                new List<string> { "leite", "ovos", "açúcar" },
-                new List<string> { "café", "açúcar" },
-                new List<string> { "fraldas" },
-                new List<string> { "manteiga", "ovos", "leite" },
-                new List<string> { "café", "açúcar", "leite", "ovos" },
-                new List<string> { "farinha", "manteiga", "ovos" },
-                new List<string> { "manteiga", "ovos", "leite", "café", "açúcar" },
-                new List<string> { "fraldas", "café", "cerveja" }
+                new List<string> { "milk", "eggs", "coffee", "sugar", "diapers", "butter" },
+                new List<string> { "milk", "coffee", "flour" },
+                new List<string> { "milk", "eggs", "sugar" },
+                new List<string> { "coffee", "sugar" },
+                new List<string> { "diapers" },
+                new List<string> { "butter", "eggs", "milk" },
+                new List<string> { "coffee", "sugar", "milk", "eggs" },
+                new List<string> { "flour", "butter", "eggs" },
+                new List<string> { "butter", "eggs", "milk", "coffee", "sugar" },
+                new List<string> { "diapers", "coffee", "beer" }
             };
 
             _service = new FluentAssociation<string>();
 
-            _service.LoadDataWarehouse(lista);
+            _service.LoadDataWarehouse(transactions);
         }
 
         [Fact]
@@ -35,9 +35,9 @@ namespace FluentAssociation.UnitTests
         {
             var metrics = await _service.GetReportItemSets(1);
 
-            var leite = metrics.GetItemSet("leite");
+            var milk = metrics.GetItemSet("milk");
 
-            leite.Suport.Should().Be(0.6f);
+            milk.Suport.Should().Be(0.6f);
         }
 
         [Fact]
@@ -45,12 +45,12 @@ namespace FluentAssociation.UnitTests
         {
             var metrics = await _service.GetReportItemSets(2);
 
-            // [leite] => [ovos]
-            var exemplo = metrics.GetItemSet("leite", "ovos");
+            // [milk] => [eggs]
+            var example = metrics.GetItemSet("milk", "eggs");
 
-            exemplo.Suport.Should().Be(0.5f);
+            example.Suport.Should().Be(0.5f);
 
-            exemplo.Confidence.Should().BeApproximately(0.83f, 1);
+            example.Confidence.Should().BeApproximately(0.83f, 1);
         }
 
         [Fact]
@@ -58,12 +58,12 @@ namespace FluentAssociation.UnitTests
         {
             var metrics = await _service.GetReportItemSets(3);
 
-            // [leite, ovos] => [café]
-            var exemplo = metrics.GetItemSet("leite", "ovos", "café");
+            // [milk, eggs] => [coffee]
+            var example = metrics.GetItemSet("milk", "eggs", "coffee");
 
-            exemplo.Suport.Should().Be(0.3f);
+            example.Suport.Should().Be(0.3f);
 
-            exemplo.Confidence.Should().Be(0.6f);
+            example.Confidence.Should().Be(0.6f);
         }
 
         [Fact]
@@ -71,12 +71,12 @@ namespace FluentAssociation.UnitTests
         {
             var metrics = await _service.GetReportItemSets(4);
 
-            // [leite, ovos, café] => [açúcar]
-            var exemplo = metrics.GetItemSet("leite", "ovos", "café", "açúcar");
+            // [milk, eggs, coffee] => [sugar]
+            var example = metrics.GetItemSet("milk", "eggs", "coffee", "sugar");
 
-            exemplo.Suport.Should().Be(0.3f);
+            example.Suport.Should().Be(0.3f);
 
-            exemplo.Confidence.Should().Be(1f);
+            example.Confidence.Should().Be(1f);
         }
 
         [Fact]
@@ -84,17 +84,17 @@ namespace FluentAssociation.UnitTests
         {
             var metrics = await _service.GetReportItemSets(4);
 
-            var melhorConfiança = metrics.OrderByDescendingConfidence().First();
+            var bestConfidence = metrics.OrderByDescendingConfidence().First();
 
-            melhorConfiança.Items.ElementAt(0).Should().BeEquivalentTo("leite");
+            bestConfidence.Items.ElementAt(0).Should().BeEquivalentTo("milk");
 
-            melhorConfiança.Items.ElementAt(1).Should().BeEquivalentTo("ovos");
+            bestConfidence.Items.ElementAt(1).Should().BeEquivalentTo("eggs");
 
-            melhorConfiança.Items.ElementAt(2).Should().BeEquivalentTo("café");
+            bestConfidence.Items.ElementAt(2).Should().BeEquivalentTo("coffee");
 
-            melhorConfiança.Items.ElementAt(3).Should().BeEquivalentTo("açúcar");
+            bestConfidence.Items.ElementAt(3).Should().BeEquivalentTo("sugar");
 
-            melhorConfiança.Suport.Should().BeApproximately(0.3f, 1);
+            bestConfidence.Suport.Should().BeApproximately(0.3f, 1);
         }
 
         [Fact]
@@ -122,13 +122,13 @@ namespace FluentAssociation.UnitTests
         {
             var metrics = await _service.GetReportItemSets(5);
 
-            var melhorConfiança = metrics.OrderByDescendingConfidence().First();
+            var bestConfidence = metrics.OrderByDescendingConfidence().First();
 
-            var melhorSuporte = metrics.OrderByDescendingSuport().First();
+            var bestSuport = metrics.OrderByDescendingSuport().First();
 
-            melhorConfiança.Items.Should().ContainInOrder("leite", "ovos", "café", "fraldas", "manteiga");
+            bestConfidence.Items.Should().ContainInOrder("milk", "eggs", "coffee", "diapers", "butter");
 
-            melhorSuporte.Items.Should().ContainInOrder("leite", "ovos", "café", "açúcar", "manteiga");
+            bestSuport.Items.Should().ContainInOrder("milk", "eggs", "coffee", "sugar", "butter");
         }
     }
 }
